@@ -1,9 +1,10 @@
-import { useEffect,useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { router } from "expo-router";
+import { useEffect, useState } from "react";
+import { Button, ScrollView, Text, View } from "react-native";
 import PokemonCard from "../components/PokemonCard";
 
 export default function Index() {
-  const [results,setResults] = useState<any[]>([]);
+  const [results, setResults] = useState<any[]>([]);
   useEffect(() => {
     console.log("Entre en pantalla");
     getPokemons();
@@ -18,14 +19,22 @@ export default function Index() {
 
   return (
     <ScrollView>
-    <View>
-      <Text>{results[250]?.name}</Text>
-      {
-        results.map((item)=>{
-          return <PokemonCard key={item.name} name={item.name} url={item.url}/>
-        })
-      }
-    </View>
+      <Button
+        title="Static page"
+        onPress={() => router.push("../pokemon/index")}
+      ></Button>
+      <Button
+        title="Dynamic page"
+        onPress={() => router.push("../pokemon/[name]")}
+      ></Button>
+      <View>
+        <Text>{results[250]?.name}</Text>
+        {results.map((item) => {
+          return (
+            <PokemonCard key={item.name} name={item.name} url={item.url} />
+          );
+        })}
+      </View>
     </ScrollView>
   );
 }
